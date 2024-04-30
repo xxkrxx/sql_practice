@@ -68,13 +68,13 @@ mysql> SELECT code, name, continent, region, surface_area
 -- 全国の中から独立記念日が1990年より前または人口が10万人より多い国を全て抽出してください。
 mysql> SELECT code, name, continent, region, surface_area, indep_year 
     -> FROM countries 
-    ->WHERE indep_year < '1990-01-01' OR population > 100000;
+    -> WHERE indep_year < '1990' OR population > 100000;
 
 -- 問13
 -- コードがDZAもしくはALBかつ独立記念日が1990年より前の国を全て抽出してください。
 mysql> SELECT code, name, continent, region, surface_area, indep_year 
     -> FROM countries 
-    ->WHERE (code = 'DZA' OR code = 'ALB') AND indep_year < '1990-01-01';
+    ->WHERE (code = 'DZA' OR code = 'ALB') AND indep_year < '1990';
 
 -- 問14
 -- 全ての地方をグループ化せずに表示してください。
@@ -176,9 +176,9 @@ mysql> SELECT celebrities.name AS name, countries.name AS name, countrylanguages
 
 -- 問29
 -- 全ての有名人の名前と国名をに出力してください。 ただしテーブル結合せずサブクエリを使用してください。
-mysql> SELECT celebrities.name AS name, countries.name AS '国名'
-    -> FROM celebrities
-    -> LEFT JOIN countries ON celebrities.country_code = countries.code;
+mysql> SELECT celebrities.name AS 名前,
+        (SELECT name FROM countries WHERE code = celebrities.country_code) AS '国名'
+        FROM celebrities;
 
 -- 問30
 -- 最年長が50歳以上かつ最年少が30歳以下の国を表示させてください。
